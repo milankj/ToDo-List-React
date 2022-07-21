@@ -7,7 +7,6 @@ function App() {
   const newDate = new Date()
   const day = newDate.getDate()
   let month = newDate.getMonth() + 1
-
   const yrs = newDate.getFullYear()
   return (
     <div className="app">
@@ -20,9 +19,12 @@ function App() {
       </div>
       <div className="input">
         <input onChange={(e) => {
-          setTodo(e.target.value)
-        }} type="text" placeholder="🖊️ Add item..." />
-        <i onClick={() => setTodos([...toDos, { text: toDo, status: false }])} className="fas fa-plus" ></i>
+          setTodo(e.target.value) 
+        }} type="text" value={toDo} placeholder="🖊️ Add item..." />
+        <i onClick={() => {
+          setTodos([...toDos, { text: toDo, status: false }])
+          setTodo('')
+          }} className="fas fa-plus" ></i>
       </div>
       <div className="todos">
         {toDos.map((obj) => {
@@ -30,10 +32,9 @@ function App() {
             <div className="todo">
               <div className="left">
                 <input onChange={(e) => {
-                  obj.status = !obj.status
-                  e.target.value = obj.status
+                  obj.status = e.target.checked
                   console.log(obj)
-                  console.log(e.target.value)
+                  console.log(e.target.checked)
                 }} value={obj.status} type="checkbox" name="" id="" />
                 <p>{obj.text}</p>
               </div>
@@ -43,14 +44,14 @@ function App() {
             </div>
           )
         })}
-        {toDos.map((obj) => {
-          if (obj.status) {
-            return (
+        {toDos.map((obj)=>{
+          if(obj.status){
+            return(
               <h1>{obj.text}</h1>
             )
-          }
+          }   
           return null
-        })}
+        })}   
       </div>  
     </div>
   )
